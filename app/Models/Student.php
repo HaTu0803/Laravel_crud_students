@@ -14,10 +14,15 @@ class Student extends Model
 
     protected $fillable = [
         'name',
-        'course',
+        'phone',
         'email',
-        'phone'
+        'status',
+
     ];
+
+    protected $attributes  = [
+        'status' => 'Active',
+        ];
 
     public function getCreatedAtAttribute($value)
     {

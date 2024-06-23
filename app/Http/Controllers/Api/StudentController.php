@@ -45,8 +45,8 @@ class StudentController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'phone' => 'required|digits:10',
-            'course' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email'=> 'required|email|max:255|unique:students,email',
+            // 'status'=> 'required|string|max:255',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -54,12 +54,12 @@ class StudentController extends Controller
                 'errors:' => $validator->messages()
             ], 422);
         } else {
-            //            $student = Student::create([
-            //                'name' => $request->name,
-            //                'phone' => $request->phone,
-            //                'course' => $request->course,
-            //                'email' => $request->email,
-            //            ]);
+            // $student = $this->studentService->create([
+            //     'name' => $request->name,
+            //     'phone' => $request->phone,
+            //     'email' => $request->email,
+            //     'status' => 'Active', // Đặt giá trị mặc định cho trường status là 'Active'
+            // ]);
 
             $student = $this->studentService->create($request);
 
@@ -102,8 +102,8 @@ class StudentController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'phone' => 'required|digits:10',
-            'course' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email'=> 'required|email|max:255|unique:students,email',
+            'status'=> 'required|string|max:255',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -116,9 +116,9 @@ class StudentController extends Controller
             if ($student) {
                 $student->update([
                     'name' => $request->name,
-                    'phone' => $request->phone,
-                    'course' => $request->course,
-                    'email' => $request->email,
+                    'phone'=> $request->phone,
+                    'email'=> $request->email,
+                    'status'=> $request->status,    
                 ]);
                 return response()->json([
                     'status:' => 200,

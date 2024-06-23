@@ -24,9 +24,13 @@ class StudentService implements StudentServiceInterface
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|digits:10',
-            'course' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email'=> 'required|email|max:255|unique:students,email',
+            // mặc định status lúc tạo là active
+            // 'status'=> 'required|string|max:255',
+           
+
         ]);
+        $validated['status'] = 'Active';
         return Student::create($validated);
     }
 
@@ -34,9 +38,9 @@ class StudentService implements StudentServiceInterface
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|digits:10',
-            'course' => 'required|string|max:255',
-            'email' => 'required|email|max:255' . $id,
+            'phone'=> 'required|digits:10',
+            'email'=> 'required|email|max:255|unique:students,email,'.$id,
+            'status'=> 'required|string|max:255',
         ]);
 
         $student = Student::find($id);
